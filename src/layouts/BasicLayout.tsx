@@ -28,10 +28,7 @@ class BasicLayout extends Component<any> {
             <Layout className="ant-pro-basicLayout">
                 <Sider
                     width={256}
-                    style={{
-                        boxShadow: '2px 0 8px 0 rgba(29, 35, 41, 0.05)',
-                        zIndex: 10,
-                    }}
+                    style={{ boxShadow: '2px 0 8px 0 rgba(29, 35, 41, 0.05)', zIndex: 10 }}
                     collapsed={collapsed}
                     theme="light"
                 >
@@ -48,7 +45,7 @@ class BasicLayout extends Component<any> {
                                 return (
                                     <SubMenu
                                         key={item.path}
-                                        icon={<item.icon />}
+                                        icon={<item.icon/>}
                                         title={item.title}
                                     >
                                         {item.routes.map((data: any) => {
@@ -56,12 +53,8 @@ class BasicLayout extends Component<any> {
                                                 return (
                                                     <Menu.Item
                                                         key={data.path}
-                                                        icon={<data.icon />}
-                                                        onClick={() =>
-                                                            this.jumpTo(
-                                                                data.path,
-                                                            )
-                                                        }
+                                                        icon={<data.icon/>}
+                                                        onClick={() => this.jumpTo(data.path)}
                                                     >
                                                         {data.title}
                                                     </Menu.Item>
@@ -74,7 +67,7 @@ class BasicLayout extends Component<any> {
                                 return (
                                     <Menu.Item
                                         key={item.path}
-                                        icon={<item.icon />}
+                                        icon={<item.icon/>}
                                         title={item.title}
                                         onClick={() => this.jumpTo(item.path)}
                                     >
@@ -92,11 +85,7 @@ class BasicLayout extends Component<any> {
                                 className="ant-pro-global-header-trigger"
                                 onClick={this.handerCollapsed}
                             >
-                                {collapsed ? (
-                                    <MenuUnfoldOutlined />
-                                ) : (
-                                    <MenuFoldOutlined />
-                                )}
+                                {collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
                             </div>
                         </div>
                     </Header>
@@ -109,34 +98,19 @@ class BasicLayout extends Component<any> {
                                             <Link to="/">首页</Link>
                                         </Breadcrumb.Item>
                                         {routes.map((item: any, i: any) => {
-                                            if (
-                                                item.title &&
-                                                item.routes &&
-                                                OpenKeys === item.path
-                                            ) {
+                                            if (item.title && item.routes && OpenKeys === item.path) {
                                                 return (
                                                     <Fragment key={i}>
                                                         <Breadcrumb.Item>
                                                             {item.title}
                                                         </Breadcrumb.Item>
-                                                        {item.routes.map(
-                                                            (
-                                                                data: any,
-                                                                k: any,
-                                                            ) => {
-                                                                if (
-                                                                    pathname ===
-                                                                    data.path
-                                                                ) {
+                                                        {item.routes.map((data: any, k: any) => {
+                                                                if (pathname === data.path) {
                                                                     return (
                                                                         <Breadcrumb.Item
-                                                                            key={
-                                                                                k
-                                                                            }
+                                                                            key={k}
                                                                         >
-                                                                            {
-                                                                                data.title
-                                                                            }
+                                                                            {data.title}
                                                                         </Breadcrumb.Item>
                                                                     );
                                                                 }
@@ -144,10 +118,7 @@ class BasicLayout extends Component<any> {
                                                         )}
                                                     </Fragment>
                                                 );
-                                            } else if (
-                                                item.title &&
-                                                pathname === item.path
-                                            ) {
+                                            } else if (item.title && pathname === item.path) {
                                                 return (
                                                     <Breadcrumb.Item key={i}>
                                                         {item.title}
