@@ -16,10 +16,7 @@ class BasicLayout extends Component<any> {
     };
 
     render() {
-        const {
-            children,
-            location: { pathname },
-        } = this.props;
+        const { children, location: { pathname } } = this.props;
         const { collapsed } = this.state;
         let str = pathname;
         const OpenKeys = str.substring(0, str.indexOf('/', 1));
@@ -83,7 +80,7 @@ class BasicLayout extends Component<any> {
                         <div className="ant-pro-global-header">
                             <div
                                 className="ant-pro-global-header-trigger"
-                                onClick={this.handerCollapsed}
+                                onClick={this.openCollapsed}
                             >
                                 {collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
                             </div>
@@ -147,7 +144,7 @@ class BasicLayout extends Component<any> {
     };
 
     //收方菜单
-    handerCollapsed = () => {
+    openCollapsed = () => {
         this.setState((state: any) => {
             return {
                 collapsed: !state.collapsed,
