@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Layout, Breadcrumb, Menu } from 'antd';
-import { history, Link } from 'umi';
-import route from '../../config/route';
+import { history, Link, connect } from 'umi';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { HeaderTitle, Logo } from '@/layouts/layouts.style';
 
@@ -16,11 +15,10 @@ class BasicLayout extends Component<any> {
     };
 
     render() {
-        const { children, location: { pathname } } = this.props;
+        const { children, location: { pathname }, siderMenuList } = this.props;
         const { collapsed } = this.state;
         let str = pathname;
-        const OpenKeys = str.substring(0, str.indexOf('/', 1));
-        const routes = route[1].routes[0].routes;
+        const openKeys = str.substring(0, str.indexOf('/', 1));
         return (
             <Layout className="ant-pro-basicLayout">
                 <Sider
@@ -34,11 +32,11 @@ class BasicLayout extends Component<any> {
                         mode="inline"
                         theme="light"
                         selectedKeys={[pathname]}
-                        defaultOpenKeys={[OpenKeys]}
+                        defaultOpenKeys={[openKeys]}
                         style={{ padding: '16px 0' }}
                     >
-                        {routes.map((item: any) => {
-                            if (item.title && item.routes) {
+                        {siderMenuList.map((item: any) => {
+                            if (item.routes) {
                                 return (
                                     <SubMenu
                                         key={item.path}
@@ -46,26 +44,23 @@ class BasicLayout extends Component<any> {
                                         title={item.title}
                                     >
                                         {item.routes.map((data: any) => {
-                                            if (data.title) {
-                                                return (
-                                                    <Menu.Item
-                                                        key={data.path}
-                                                        icon={<data.icon/>}
-                                                        onClick={() => this.jumpTo(data.path)}
-                                                    >
-                                                        {data.title}
-                                                    </Menu.Item>
-                                                );
-                                            }
+                                            return (
+                                                <Menu.Item
+                                                    key={data.path}
+                                                    icon={<data.icon/>}
+                                                    onClick={() => this.jumpTo(data.path)}
+                                                >
+                                                    {data.title}
+                                                </Menu.Item>
+                                            );
                                         })}
                                     </SubMenu>
                                 );
-                            } else if (item.title && !item.routes) {
+                            } else {
                                 return (
                                     <Menu.Item
                                         key={item.path}
                                         icon={<item.icon/>}
-                                        title={item.title}
                                         onClick={() => this.jumpTo(item.path)}
                                     >
                                         {item.title}
@@ -86,7 +81,7 @@ class BasicLayout extends Component<any> {
                             </div>
                         </div>
                     </Header>
-                    <Content>
+                    <Layout>
                         <div className="ant-pro-page-header-wrap-page-header-warp">
                             <div className="ant-pro-grid-content">
                                 <div className="ant-page-header has-breadcrumb ant-page-header-ghost">
@@ -94,8 +89,8 @@ class BasicLayout extends Component<any> {
                                         <Breadcrumb.Item>
                                             <Link to="/">首页</Link>
                                         </Breadcrumb.Item>
-                                        {routes.map((item: any, i: any) => {
-                                            if (item.title && item.routes && OpenKeys === item.path) {
+                                        {siderMenuList.map((item: any, i: any) => {
+                                            if (item.routes && openKeys === item.path) {
                                                 return (
                                                     <Fragment key={i}>
                                                         <Breadcrumb.Item>
@@ -115,7 +110,7 @@ class BasicLayout extends Component<any> {
                                                         )}
                                                     </Fragment>
                                                 );
-                                            } else if (item.title && pathname === item.path) {
+                                            } else if (pathname === item.path) {
                                                 return (
                                                     <Breadcrumb.Item key={i}>
                                                         {item.title}
@@ -125,13 +120,40 @@ class BasicLayout extends Component<any> {
                                         })}
                                     </Breadcrumb>
                                     <div className="ant-page-header-heading">
-                                        <HeaderTitle>TITLE</HeaderTitle>
+                                        <HeaderTitle>
+                                            {siderMenuList.map((item: any, i: any) => {
+                                                if (item.routes && openKeys === item.path) {
+                                                    return (
+                                                        <Fragment key={i}>
+                                                            {item.routes.map((data: any, k: any) => {
+                                                                    if (pathname === data.path) {
+                                                                        return (
+                                                                            <Fragment key={k}>
+                                                                                {data.title}
+                                                                            </Fragment>
+                                                                        );
+                                                                    }
+                                                                },
+                                                            )}
+                                                        </Fragment>
+                                                    );
+                                                } else if (pathname === item.path) {
+                                                    return (
+                                                        <Fragment key={i}>
+                                                            {item.title}
+                                                        </Fragment>
+                                                    );
+                                                }
+                                            })}
+                                        </HeaderTitle>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div>{children}</div>
-                    </Content>
+                        <Content>
+                            {children}
+                        </Content>
+                    </Layout>
                     <Footer>Footer</Footer>
                 </Layout>
             </Layout>
@@ -143,7 +165,7 @@ class BasicLayout extends Component<any> {
         history.push(path);
     };
 
-    //收方菜单
+    //展开/关闭，右侧菜单
     openCollapsed = () => {
         this.setState((state: any) => {
             return {
@@ -153,4 +175,6 @@ class BasicLayout extends Component<any> {
     };
 }
 
-export default BasicLayout;
+export default connect(({ siderMenuList }: any) => ({
+    siderMenuList: siderMenuList.siderMenuList,
+}))(BasicLayout);

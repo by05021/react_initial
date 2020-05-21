@@ -1,9 +1,3 @@
-import {
-    HomeOutlined,
-    CopyOutlined,
-    OrderedListOutlined,
-} from '@ant-design/icons';
-
 const routes: any = [
     {
         path: '/login',
@@ -25,13 +19,11 @@ const routes: any = [
                     {
                         path: '/welcome',
                         title: '欢迎登录',
-                        icon: HomeOutlined,
                         component: '@/pages/welcome',
                     },
                     {
                         path: '/order',
                         title: '订单管理',
-                        icon: CopyOutlined,
                         component: '@/pages/order/index',
                         routes: [
                             {
@@ -41,7 +33,6 @@ const routes: any = [
                             {
                                 path: '/order/list',
                                 title: '订单列表',
-                                icon: OrderedListOutlined,
                                 component: '@/pages/order/list/index',
                             },
                         ],
