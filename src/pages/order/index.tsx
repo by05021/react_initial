@@ -1,7 +1,7 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 
 const Order = (props: any) => {
-    return <div>{props.children}</div>;
+    return <Fragment>{props.children}</Fragment>;
 };
 
 export default Order;

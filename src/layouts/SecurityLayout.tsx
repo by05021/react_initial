@@ -2,11 +2,13 @@ import React from 'react';
 import { PageLoading } from '@ant-design/pro-layout';
 import { Redirect } from 'umi';
 import { stringify } from 'querystring';
+import { get } from '@/utils/helper';
 import '@/pages/index.less';
 
 interface SecurityLayoutState {
     isReady: boolean;
 }
+
 //全局安全Layout，可做登录验证之类操作
 class SecurityLayout extends React.Component<SecurityLayoutState> {
     state: SecurityLayoutState = {
@@ -26,11 +28,11 @@ class SecurityLayout extends React.Component<SecurityLayoutState> {
             redirect: window.location.href,
         });
         if (!isReady) {
-            return <PageLoading />;
+            return <PageLoading/>;
         }
-        // if (window.location.pathname !== '/user/login') {
-        //     return <Redirect to={`/user/login?${queryString}`}/>;
-        // }
+        if (!get('token') && window.location.pathname !== '/login') {
+            return <Redirect to={`/login?${queryString}`}/>;
+        }
         return children;
     }
 }

@@ -2,6 +2,8 @@ import {
     HomeOutlined,
     CopyOutlined,
     OrderedListOutlined,
+    UserOutlined,
+    SettingOutlined
 } from '@ant-design/icons';
 
 const siderMenuList = {
@@ -22,6 +24,19 @@ const siderMenuList = {
                         path: '/order/list',
                         title: '订单列表',
                         icon: OrderedListOutlined,
+                    },
+                ],
+            },
+            {
+                path: '/config',
+                title: '系统设置',
+                icon: SettingOutlined,
+                authority: ['admin'],
+                routes: [
+                    {
+                        path: '/config/users',
+                        title: '后台用户',
+                        icon: UserOutlined,
                     },
                 ],
             }

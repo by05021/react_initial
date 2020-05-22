@@ -3,6 +3,8 @@ import { Layout, Breadcrumb, Menu } from 'antd';
 import { history, Link, connect } from 'umi';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { HeaderTitle, Logo } from '@/layouts/layouts.style';
+import logo from '@/assets/images/logo.svg';
+import Avatar from '@/components/GlobalHeader/Avatar';
 
 const { SubMenu } = Menu;
 
@@ -22,12 +24,17 @@ class BasicLayout extends Component<any> {
         return (
             <Layout className="ant-pro-basicLayout">
                 <Sider
+                    className='fix-sider-bar'
                     width={256}
-                    style={{ boxShadow: '2px 0 8px 0 rgba(29, 35, 41, 0.05)', zIndex: 10 }}
                     collapsed={collapsed}
                     theme="light"
                 >
-                    <Logo>logo</Logo>
+                    <Logo>
+                        <a href="">
+                            <img src={logo} alt=""/>
+                            {!collapsed && <h1>Ant Design Pro</h1>}
+                        </a>
+                    </Logo>
                     <Menu
                         mode="inline"
                         theme="light"
@@ -70,8 +77,9 @@ class BasicLayout extends Component<any> {
                         })}
                     </Menu>
                 </Sider>
-                <Layout style={{ position: 'relative' }}>
-                    <Header style={{ padding: 0, zIndex: 9 }}>
+                <Layout style={{ position: 'relative', paddingLeft: collapsed ? 80 : 256 }}>
+                    <Header/>
+                    <Header style={{ padding: 0, zIndex: 9, position: 'fixed', top: 0, width: `calc(100% - ${collapsed ? 80 : 256}px)` }}>
                         <div className="ant-pro-global-header">
                             <div
                                 className="ant-pro-global-header-trigger"
@@ -79,6 +87,8 @@ class BasicLayout extends Component<any> {
                             >
                                 {collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
                             </div>
+                            <div style={{flex: '1 1 0%'}}/>
+                            <Avatar/>
                         </div>
                     </Header>
                     <Layout>
