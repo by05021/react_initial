@@ -63,9 +63,11 @@ class Login extends Component<any, any> {
             payload: '123',
         });
         if (query.redirect) {
+            set('account_type', 'user');
             set('token', '123');
             window.location.href = query.redirect;
         } else {
+            set('account_type', 'user');
             set('token', '123');
             history.push('/index');
         }

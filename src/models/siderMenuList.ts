@@ -14,11 +14,13 @@ const siderMenuList = {
                 path: '/welcome',
                 title: '欢迎登录',
                 icon: HomeOutlined,
+                authority: ['admin','user'],
             },
             {
                 path: '/order',
                 title: '订单管理',
                 icon: CopyOutlined,
+                authority: ['admin','user'],
                 routes: [
                     {
                         path: '/order/list',

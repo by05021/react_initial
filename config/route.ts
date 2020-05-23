@@ -37,9 +37,18 @@ const routes: any = [
                             },
                         ],
                     },
+                    {
+                        component: '@/pages/404',
+                    },
                 ],
             },
+            {
+                component: '@/pages/404',
+            },
         ],
+    },
+    {
+        component: '@/pages/404',
     },
 ];
 
